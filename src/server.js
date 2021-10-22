@@ -1,4 +1,5 @@
 const express = require('express')
+const moment = require('moment')
 /**************************************************************************************** */
 const { apiProductos } = require("./routes/apiProductos")
 const { webProductos } = require("./routes/webProductos")
@@ -45,7 +46,7 @@ io.on('connection', async socket => {
 
     /* Escucho los mensajes enviado por el cliente y se los propago a todos */
     socket.on('nuevoMensaje', data => {
-        data.fechayhora = new Date()
+        data.fechayhora = moment(new Date()).format('DD/MM/YYYY HH:MM:SS');
         mensajes.push(data)
         io.sockets.emit('mensajes', mensajes)
     })
